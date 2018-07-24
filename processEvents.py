@@ -22,6 +22,7 @@ def processInput(input_file):
 	reducedTrips = []
 	trips = []
 
+	#Iterates through every event, keeping track of "DROP"s
 	for i in range(220):
 		constraint = fin.readline().split(",")
 
@@ -44,8 +45,8 @@ def processInput(input_file):
 			reducedTrips.append((bird_id,x,y,x,y,timestamp,0))
 			trips.append((bird_id,True,x,y,x,y,timestamp,0))
 			birds.append(bird_id)
-		#if event_type == 'START_RIDE':
-
+	#Updates, for any given bird_id, the last ride with one of its END_RIDEs until that Bird's recorded last
+	#ride is the END_RIDE which has the largest timestamp
 	for i2 in range(220):
 			constraint = fin2.readline().split(",")
 
@@ -59,33 +60,24 @@ def processInput(input_file):
 			x = float(str(m[3]))
 			y = float(str(m[4]))
 			user_id = str(m[5])			
-			#if event_type == 'END_RIDE':
-			#print('bingo!')
-			j=0
 			tempCopy = reducedTrips
 			for index,tupleV in enumerate(reducedTrips):
 				if tupleV[0] == bird_id:
-					#print('bingo!')
 					if int(tupleV[5]) < int(timestamp):
 						lst = list(tupleV)
 						lst[3] = x
 						lst[4] = y
 						t = tuple(lst)
 						reducedTrips[index]=t
-				#reducedTrips = tempCopy
-				j=j+1
 	jk=0
 	for tupleVI in reducedTrips:
 		tempCopy2 = reducedTrips
 		lst = list(tupleVI)
-		#print(str(tupleVI[1])+", "+str(tupleVI[2])+", "+str(tupleVI[3])+", "+str(tupleVI[4]))
 		subOp1 = (tupleVI[1]-tupleVI[3])**2
 		subOp2 = (tupleVI[2]-tupleVI[4])**2
 		lst[6] = math.sqrt(subOp2+subOp1)
-		#(((float(tupleVI[1])-(float(tupleVI[3]))**2)*math.sin(math.radians(float(tupleVI[3])))+math.cos(math.radians(float(tupleVI[1]))))#*math.cos(math.radians(float(tupleVI[3])))*math.cos(math.radians(float(tupleVI[4]))-math.radians(float(tupleVI[2]))))*6371
 		t = tuple(lst)
 		reducedTrips[jk]=t
-		#reducedTrips = tempCopy2
 		jk=jk+1
 	numOfBirds = len(birds)
 	print("The total number of Bird vehicles dropped off in the simulation is "+str(len(birds))+".")
@@ -123,14 +115,11 @@ def processInput(input_file):
 	jkl=0
 	for tupleVI in trips:
 		lst = list(tupleVI)
-		#print(str(tupleVI[1])+", "+str(tupleVI[2])+", "+str(tupleVI[3])+", "+str(tupleVI[4]))
 		subOp1 = (tupleVI[1]-tupleVI[3])**2
 		subOp2 = (tupleVI[2]-tupleVI[4])**2
 		lst[6] = math.sqrt(subOp2+subOp1)
-		#(((float(tupleVI[1])-(float(tupleVI[3]))**2)*math.sin(math.radians(float(tupleVI[3])))+math.cos(math.radians(float(tupleVI[1]))))#*math.cos(math.radians(float(tupleVI[3])))*math.cos(math.radians(float(tupleVI[4]))-math.radians(float(tupleVI[2]))))*6371
 		t = tuple(lst)
 		trips[jkl]=t
-		#reducedTrips = tempCopy2
 		jkl=jkl+1
 	for i3 in range(220):
 			constraint = fin4.readline().split(",")
@@ -160,10 +149,12 @@ def processInput(input_file):
 							lst[7] = updatedDistance
 							t = tuple(lst)
 							trips[index]=t
-	for index,tupleV in enumerate(reducedTrips):
+	maxP = 0
+	for index,tupleV in enumerate(trips):
 		if maxP < tupleV[7]:
-			maxP = tupleV[6]
+			maxP = tupleV[7]
 			b_id = tupleV[0]
+	print("The Bird that has traveled the longest distance in total on all of its rides is "+b_id+" with a distance of "+str(maxP)+".")
 
 
 	
