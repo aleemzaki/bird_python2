@@ -78,8 +78,10 @@ def processInput(input_file):
 	for tupleVI in reducedTrips:
 		tempCopy2 = reducedTrips
 		lst = list(tupleVI)
-		print(tupleVI[1])
-		lst[6] = math.sqrt((float(tupleVI[1])-float(tupleVI[3]))**2 -(float(tupleVI[2])-float(tupleVI[4]))**2)
+		#print(str(tupleVI[1])+", "+str(tupleVI[2])+", "+str(tupleVI[3])+", "+str(tupleVI[4]))
+		subOp1 = (tupleVI[1]-tupleVI[3])**2
+		subOp2 = (tupleVI[2]-tupleVI[4])**2
+		lst[6] = math.sqrt(subOp2+subOp1)
 		#(((float(tupleVI[1])-(float(tupleVI[3]))**2)*math.sin(math.radians(float(tupleVI[3])))+math.cos(math.radians(float(tupleVI[1]))))#*math.cos(math.radians(float(tupleVI[3])))*math.cos(math.radians(float(tupleVI[4]))-math.radians(float(tupleVI[2]))))*6371
 		t = tuple(lst)
 		reducedTrips[jk]=t
@@ -87,7 +89,7 @@ def processInput(input_file):
 		jk=jk+1
 	numOfBirds = len(birds)
 	print("The total number of Bird vehicles dropped off in the simulation is "+str(len(birds))+".")
-	print(reducedTrips)
+	#print(reducedTrips)
 
 if __name__ == '__main__':
 	#main(sys.argv[1:])
