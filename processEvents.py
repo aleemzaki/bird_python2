@@ -89,6 +89,12 @@ def processInput(input_file):
 		jk=jk+1
 	numOfBirds = len(birds)
 	print("The total number of Bird vehicles dropped off in the simulation is "+str(len(birds))+".")
+	maxP = 0
+	for index,tupleV in enumerate(reducedTrips):
+		if maxP < tupleV[6]:
+			maxP = tupleV[6]
+			b_id = tupleV[0]
+	print("The Bird that ends up farthest away from its drop location is "+b_id+" with a distance of "+str(maxP))
 	#print(reducedTrips)
 
 if __name__ == '__main__':
