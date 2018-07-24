@@ -46,15 +46,13 @@ def processInput(input_file):
 		if event_type == 'DROP':
 			reducedTrips.append((bird_id,x,y,x,y,timestamp,0))
 			birds.append(bird_id)
-	for h in range(220):
-		fin2 = open(input_file, "r")
-		for i in range(220):
+	for i2 in range(220):
 			constraint = fin2.readline().split(",")
 
 			c = constraint
 			m = [k for v,k in enumerate(constraint)]
 
-			constraintDict[i] = c
+			constraintDict[i2] = c
 			timestamp = int(str(m[0]))
 			bird_id = str(m[1])
 			event_type = str(m[2])
@@ -65,7 +63,7 @@ def processInput(input_file):
 			#print('bingo!')
 			j=0
 			tempCopy = reducedTrips
-			for tupleV in reducedTrips:
+			for index,tupleV in enumerate(reducedTrips):
 				if tupleV[0] == bird_id:
 					#print('bingo!')
 					if int(tupleV[5]) < int(timestamp):
@@ -73,8 +71,9 @@ def processInput(input_file):
 						lst[3] = x
 						lst[4] = y
 						t = tuple(lst)
-						reducedTrips[j]=t
-						#reducedTrips = tempCopy
+						reducedTrips[index]=t
+				#reducedTrips = tempCopy
+				j=j+1
 	jk=0
 	for tupleVI in reducedTrips:
 		tempCopy2 = reducedTrips
@@ -91,4 +90,5 @@ def processInput(input_file):
 	print(reducedTrips)
 
 if __name__ == '__main__':
+	#main(sys.argv[1:])
 	main(sys.argv[1:])
